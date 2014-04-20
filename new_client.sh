@@ -3,7 +3,7 @@
 
 echo "****************************"
 echo "* Script by Ashish Belwase *"
-echo "* www.geeknepal.com        *"
+echo "*  www.geeknepal.com       *"
 echo "****************************"
 
 echo "Enter name , roomno , nettype(LAN/Wifi) , mac, ip addr"
