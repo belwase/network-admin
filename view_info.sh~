@@ -1,0 +1,15 @@
+#!/bin/sh
+# This script is used to view info about updated ip address, bandwidth nodes 
+
+echo "****************************"
+echo "* Script by Ashish Belwase *"
+echo "*     CE - 2011	         *"
+echo "*  www.geeknepal.com       *"
+echo "****************************"
+
+
+echo "\n**** DHCP ****"
+awk '/'$1''.''$2'/{c=3}c&&c--' dhcp  #printing two lines after matching string
+echo "\n**** Bandwidth ****"
+cat bandwidth |grep $1| awk '{print $15,$16,$17,$18}'
+echo "\n"

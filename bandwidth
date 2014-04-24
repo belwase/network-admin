@@ -1,0 +1,2 @@
+tc filter add dev eth1 protocol ip parent 1:0 1 u32 match ip dist 192.168.15.1 flowid 1:3 #ashish.2011.wifi
+tc filter add dev eth1 protocol ip parent 1:0 1 u32 match ip dist 192.168.15.2 flowid 1:3 #belwase.2012.lan

@@ -8,8 +8,7 @@ echo "*  www.geeknepal.com       *"
 echo "****************************\n"
 
 #View latest info
-#sed -n '$p' dhcp
-tail -1 dhcp | awk '{print $2}'
+sed -n '$p' dhcp
 tail -1 bandwidth | awk '{print $15,$16,$17,$18}'
 
 echo "\n"

@@ -1,0 +1,2 @@
+iptables -A FORWARD -s 192.168.15.1 -m mac --mac-source 12:de:#2:s3:32:@3 -j ACCEPT #ashish.2011.wifi
+iptables -A FORWARD -s 192.168.15.2 -m mac --mac-source 22:Se:#2:32:23:fe -j ACCEPT #belwase.2012.lan

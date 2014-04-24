@@ -1,0 +1,13 @@
+
+host ashish.2011.wifi.ku.edu.np { 
+       hardware ethernet 12:de:#2:s3:32:@3;
+       fixed-address 192.168.15.1;
+
+host belwase.2012.lan.ku.edu.np { 
+       hardware ethernet 22:Se:#2:32:23:fe;
+       fixed-address 192.168.15.2;
+
+host ashish.2012.lan.ku.edu.np {
+       hardware ethernet 22:Se:#2:32:23:fe;
+       fixed-address 192.168.15.3;
+
