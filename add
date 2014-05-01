@@ -1,0 +1,29 @@
+#!/bin/sh
+# This file will add new host in dhcp server and sets allow rule in firewall of iptables 
+
+echo "****************************"
+echo "* Script by Ashish Belwase *"
+echo "*     CE - 2011	         *"
+echo "*  www.geeknepal.com       *"
+echo "****************************\n"
+
+#View latest info
+#sed -n '$p' dhcp
+tail -2 /etc/dhcp/dhcpd.conf | awk '{print $2}'
+tail -2 /home/kubh/gateway/bandMan/bandwidth.sh | awk '{print $15,$16,$17,$18}'
+
+echo "\n"
+echo "Enter name ,depart, batch , nettype(LAN/Wifi) , mac, ip addr"
+read name batch depart netType mac ip
+
+
+#DHCP Rules
+echo "\n""host "$name"."$depart"."$batch"."$netType".""ku.edu.np { \n       hardware ethernet" $mac";""\n       fixed-address "$ip";\n}">> /etc/dhcp/dhcpd.conf
+
+# now rules for firewall
+echo "iptables -A FORWARD -s "$ip "-m mac --mac-source" $mac "-j ACCEPT" "#"$name"."$depart"."$batch"."$netType >> /home/kubh/gateway/config/allow.sh
+
+# Bandwidth shaping
+node=1:3
+echo "tc filter add dev eth1 protocol ip parent 1:0 prio 1 u32 match ip dst" $ip "flowid" $node "#"$name"."$depart"."$batch"."$netType >> /home/kubh/gateway/bandMan/bandwidth.sh
+

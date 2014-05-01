@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo "****************************"
+echo "* Script by Ashish Belwase *"
+echo "*     CE - 2011            *"
+echo "*  www.geeknepal.com       *"
+echo "****************************\n"
+
+# This script is used to block an ip address .. It takes last two places of  ip ad argument 1.
+
+_path=/home/kubh/gateway/block_list
+_bandPath=/home/kubh/gateway/bandMan/bandwidth.sh
+_now=$(date +"%l:%M-%m_%d_%Y")
+echo "tc filter add dev eth1 protocol ip parent 1:0 prio 1 u32 match ip dst 192.168.$1 flowid 1:6" "# Time:  $_now" >> $_path
+sed -i /192.168.$1/s/^/#/ /home/kubh/gateway/bandMan/bandwidth.sh
+bandRestart
+
