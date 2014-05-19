@@ -1,15 +1,18 @@
 #!/bin/sh
 # This script is used to view info about updated ip address, bandwidth nodes of a client
 
-echo "****************************"
-echo "* Script by Ashish Belwase *"
-echo "*     CE - 2011	         *"
-echo "*  www.geeknepal.com       *"
-echo "****************************"
+echo "********************************************************************"
+echo "* Script by Ashish Belwase [CE - 2011] --  www.geeknepal.com       *"
+echo "********************************************************************"
 
 
 echo "\n**** DHCP ****"
-awk '/'$1''.''$2'/{c=3}c&&c--' /etc/dhcp/dhcpd.conf  #printing two lines after matching string
+
+grep -w "$1" /etc/dhcp/dhcpd.conf -B 2 -A 2
+
+#awk '/'$1''.''$2'/{c=3}c&&c--' /etc/dhcp/dhcpd.conf
+#awk '/'$1'/ {for(i=1; i<=3; i++) {getline; print}}' /etc/dhcp/dhcpd.conf  | awk '{print $2,$6,$7,$8,$9}'  #printing two lines after matching string
+
 echo "\n**** Bandwidth ****"
-cat /home/kubh/gateway/bandMan/bandwidth.sh |grep -w $1| awk '{print $15,$16,$17,$18}'
+cat /home/kubh/gateway/bandMan/bandwidth.sh |grep -w $1| awk '{print $15,$16,$17,$18,$19}'
 echo "\n"
