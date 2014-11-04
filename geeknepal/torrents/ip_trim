@@ -1,0 +1,13 @@
+#!/bin/sh
+ip=$1
+#baseip=`echo $ip | cut -d"." -f1-1`
+#echo $baseip".0"
+
+
+
+tailip=`echo $ip | cut -d"." -f3-4`
+toblock=$tailip
+echo "ip to block $toblock"
+echo "x.x."$tailip
+
+

@@ -1,0 +1,15 @@
+import sh
+
+print "Scanning..."
+# ping range 192.168.16.1 - 192.168.16.255
+for num in range(1,255):
+    # declare ip address
+    address = "192.168.16." + str(num)
+
+    # check if host is alive using PING
+    try:
+        # bash equivalent: ping -c 1 > /dev/null
+        sh.ping(address, "-c 1", _out="/dev/null")
+        print "ping to", address, "OK"
+    except sh.ErrorReturnCode_1:
+        print "no response from", address

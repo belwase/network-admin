@@ -1,0 +1,6 @@
+#!/bin/sh
+
+#view bandwidth of an ip address and its firewall on iptables
+cat /home/kubh/gateway/bandMan/bandwidth.sh | grep $1
+cat /home/kubh/gateway/config/allow.sh | grep $1
+

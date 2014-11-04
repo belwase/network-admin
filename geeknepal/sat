@@ -1,0 +1,6 @@
+#7:00 AM - 7:00 PM
+sed -i 's/55kbps/70kbps/'  /home/kubh/gateway/bandMan/root.sh
+bandRestart
+
+#Resume to normal
+#sed -i 's/70kbps ceil 90kbps/50kbps ceil 60kbps/'  root.sh

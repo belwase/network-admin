@@ -1,0 +1,3 @@
+sed -i 's/500kbps/50kbps/' /home/kubh/gateway/bandMan/root.sh
+sed -i 's/700kbps/90kbps/' /home/kubh/gateway/bandMan/root.sh
+bandRestart

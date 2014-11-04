@@ -1,0 +1,4 @@
+#!/bin/sh
+sed -i '/$1*/d' /etc/dhcp/dhcpd.conf
+sed -i '/$1*/d' /home/kubh/gateway/bandMan/bandwidth.sh
+sed -i '/$1*/d' /home/kubh/gateway/config/allow.sh

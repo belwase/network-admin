@@ -1,0 +1,18 @@
+#!/bin/bash
+
+echo "****************************"
+echo "* Script by Ashish Belwase *"
+echo "*     CE - 2011            *"
+echo "*  www.geeknepal.com       *"
+echo "****************************"
+
+# This script is used to unblock an ip address .. It takes last two places of  ip ad argument 1.
+
+#grep -v -w $1 /home/kubh/gateway/block_list > /home/kubh/gateway/block_list_temp
+ 
+#cp /home/kubh/gateway/block_list_temp  /home/kubh/gateway/block_list
+
+sed -i "/192.168.$1/d" /home/kubh/gateway/block_list 
+sed -i "/192.168.$1/s/^.//" /home/kubh/gateway/bandMan/bandwidth.sh
+
+bandRestart

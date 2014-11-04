@@ -1,0 +1,15 @@
+#First analyze the packets
+tshark -i eth1 -R bittorrent -a duration:30  > torrents
+
+#Now extract ips
+grep -o '192.168.[0-9]\{1,3\}\.[0-9]\{1,3\}' torrents > id_torrents
+
+#now sort ip to final file
+sed  's/, /\n/g' id_torrents | sort | uniq > final_list
+
+#Trim last two octet of given ip
+tailip=`echo $ip | cut -d"." -f3-4`
+toblock=$tailip
+echo "ip to block $toblock"
+#echo "x.x."$tailip
+cat final_list

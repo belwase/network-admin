@@ -1,0 +1,15 @@
+#!/bin/sh
+
+#if grep -R "$var" final_list > /dev/null
+#then
+#   echo "found"
+#else
+#   echo "found"
+#fi
+
+file=final_list
+if grep -q $1 "$file"; then
+   echo "found"
+ fi
+
+exit

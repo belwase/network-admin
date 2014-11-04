@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo "****************************"
+echo "* Script by Ashish Belwase *"
+echo "*     CE - 2011            *"
+echo "*  www.geeknepal.com       *"
+echo "****************************\n"
+
+# This script is used to view all blocked ips.
+cat /home/kubh/gateway/block_list

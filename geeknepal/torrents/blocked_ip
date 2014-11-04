@@ -1,0 +1,3 @@
+#!/bin/sh
+blocked | grep -o '192.168.[0-9]\{1,3\}\.[0-9]\{1,3\}' > /var/www/files/blocked
+sed -i "s/$/,/g" /var/www/files/blocked

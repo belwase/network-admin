@@ -1,0 +1,17 @@
+#!/bin/bash
+
+
+for ((i=1;; i++)); do
+    read "d$i" || break;
+done < final_list
+
+#echo "${d[1]}"
+echo "$d1"
+
+#total=${#d[*]}
+#echo "$total"
+# 
+for (( i=0; i<=$(( $total -1 )); i++ ))
+do
+    echo -n "${d[$i]} "
+done

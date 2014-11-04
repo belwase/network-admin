@@ -1,0 +1,7 @@
+
+echo $@
+echo $#
+band="a line""."$1
+#sed -i '/\[#begin\]/{:a;n;/^$/!ba;i\inserted line' -e '}'
+sed -i '/^#2014/,/^$/!b;/^$/i\'"$band" test
+

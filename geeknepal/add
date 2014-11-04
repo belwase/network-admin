@@ -1,0 +1,72 @@
+#!/bin/sh
+# This file will add new host in dhcp server and sets allow rule in firewall of iptables 
+
+echo "********************************************************************"
+echo "* Script by Ashish Belwase [CE - 2011] --  www.geeknepal.com       *"
+echo "********************************************************************"
+
+#View latest info
+#sed -n '$p' dhcp
+#tail -2 /etc/dhcp/dhcpd.conf | awk '{print $2}'
+#tail -2 /home/kubh/gateway/bandMan/bandwidth.sh | awk '{print $15,$16,$17,$18}'
+echo "Others"
+awk '/#Others/ {for(i=1; i<=2; i++) {getline; print}}' /etc/dhcp/dhcpd.conf | awk '{print $2,$6,$9}'
+awk '/#Others/ {for(i=1; i<=2; i++) {getline; print}}' /home/kubh/gateway/bandMan/bandwidth.sh  | awk '{print $16,$17,$18,$19}'
+echo "\n2014"
+awk '/#2014/ {for(i=1; i<=2; i++) {getline; print}}' /etc/dhcp/dhcpd.conf  | awk '{print $2,$6,$9}'
+awk '/#2014/ {for(i=1; i<=2; i++) {getline; print}}' /home/kubh/gateway/bandMan/bandwidth.sh  | awk '{print $16,$17,$18,$19}'
+echo "\n"
+echo "Enter name ,depart ,batch, nettype(LAN/Wifi) , mac, ip addr,flow id"
+read name depart batch netType mac ip flow_id
+
+#if [ -z $batch ]
+#then
+#	echo "Usage: name ,depart, batch, nettype(LAN/Wifi) , mac, ip addr,flow id"
+#	exit
+#else
+
+#Check for new or old batch..Current new batch is 2014
+if [ $batch -eq 2014 ]
+then
+	#DHCP Rules
+       	dhcp=`echo "\n""host "$name"."$depart"."$batch"."$netType".""kubh.ku.edu.np {  hardware ethernet" $mac";""   fixed-address "$ip";}"`
+	sed -i '/#2014/ a\'"$dhcp" /etc/dhcp/dhcpd.conf
+	# now rules for firewall
+       	fire=`echo "iptables -A FORWARD -s "$ip "-m mac --mac-source" $mac "-j ACCEPT" "#"$name"."$depart"."$batch"."$netType`
+	sed -i '/#2014/ a\'"$fire" /home/kubh/gateway/config/allow.sh
+       	# Bandwidth shaping
+       	band=`echo "tc filter add dev eth1 protocol ip parent 1:0 prio 1 u32 match ip dst" $ip "flowid" $flow_id "#"$name"."$depart"."$batch"."$netType`
+	sed -i '/#2014/ a\'"$band" /home/kubh/gateway/bandMan/bandwidth.sh
+
+#elif [[ $batch -eq temp ]]
+#then
+#	 #DHCP Rules
+ #       dhcp=`echo "\n""host "$name"."$depart"."$batch"."$netType".""kubh.ku.edu.np {  hardware ethernet" $mac";""   fixed-address "$ip";}"`
+  #      sed -i '/#temp/ a\'"$dhcp" /etc/dhcp/dhcpd.conf
+   #     # now rules for firewall
+    #    fire=`echo "iptables -A FORWARD -s "$ip "-m mac --mac-source" $mac "-j ACCEPT" "#"$name"."$depart"."$batch"."$netType`
+     #   sed -i '/#temp/ a\'"$fire" /home/kubh/gateway/config/allow.sh
+      #  # Bandwidth shaping
+       # band=`echo "tc filter add dev eth1 protocol ip parent 1:0 prio 1 u32 match ip dst" $ip "flowid" $flow_id "#"$name"."$depart"."$batch"."$netTyp$
+        #sed -i '/#temp/ a\'"$band" /home/kubh/gateway/bandMan/bandwidth.sh
+else
+	 #DHCP Rules
+	dhcp=`echo "\n""host "$name"."$depart"."$batch"."$netType".""kubh.ku.edu.np {  hardware ethernet" $mac";""   fixed-address "$ip";}"`
+        sed -i '/#Others/ a\'"$dhcp" /etc/dhcp/dhcpd.conf
+        # now rules for firewall
+        fire=`echo "iptables -A FORWARD -s "$ip "-m mac --mac-source" $mac "-j ACCEPT" "#"$name"."$depart"."$batch"."$netType`
+        sed -i '/#Others/ a\'"$fire" /home/kubh/gateway/config/allow.sh
+        # Bandwidth shaping
+       	band=`echo "tc filter add dev eth1 protocol ip parent 1:0 prio 1 u32 match ip dst" $ip "flowid" $flow_id "#"$name"."$depart"."$batch"."$netType`
+        sed -i '/#Others/ a\'"$band" /home/kubh/gateway/bandMan/bandwidth.sh
+fi
+
+echo "### invoking firewall rules ###"
+sudo /home/kubh/gateway/config/restrict_trigger.sh
+
+
+echo "### involing bandwidth control rules ###"
+bandRestart
+
+echo "### restarting DHCP daemon "
+sudo service isc-dhcp-server restart

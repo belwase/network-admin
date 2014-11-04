@@ -1,0 +1,11 @@
+#!/bin/sh
+#ways to print next consecutive lines
+echo "2014 batch latest"
+echo "*****************"
+awk '/#2014/ {for(i=1; i<=2; i++) {getline; print}}' /home/kubh/gateway/bandMan/bandwidth.sh
+echo "*****************"
+echo "Others"
+awk '/#Others/ {for(i=1; i<=2; i++) {getline; print}}' /home/kubh/gateway/bandMan/bandwidth.sh
+#sed -n '/#2014/{n;p;n;p;n;p;n;p;n;p}' bandwidth.sh
+#sed -n '1{x;s/.*/####/;x};/#2014/{:a;n;p;x;s/.//;ta;q}' bandwidth.sh
+
